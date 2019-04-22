@@ -138,7 +138,7 @@ if __name__ == "__main__":
     with open(datafilename, 'w') as f:
         f.write('runs: {}, episodes: {} ;'.format(runs, episodes) + ';'.join(labels) + 'thread time:' + str(
             thread_time) + '\n')
-        for data in run_data:
+        for data in run_data_final:
             f.write(str(data) + '\n')
 
     '''--------------------------------------------
