@@ -155,7 +155,7 @@ class H_Agent:
         if network is None:
             network = self.NN
         if self.cuda:
-            state_tuple = (s.cuda for s in state_tuple)
+            state_tuple = (s.cuda() for s in state_tuple)
         q = network(state_tuple)
         return q
 
