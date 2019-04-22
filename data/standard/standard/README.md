@@ -5,6 +5,8 @@
 
 7621 - 5 nodes, 1 type
 
+3826 - 5 nodes, 2 types
+
 2240 - 6 nodes, 1 type
 
 9079 - 8 nodes, 1 type
