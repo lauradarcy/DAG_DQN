@@ -6,7 +6,7 @@ def mean(a):
 
 plt.style.use('seaborn-paper')
 
-datafilename = 'data/data_4-1-0-0-1_7998.dat'
+datafilename = 'data/standard/standard/FINALdata_4-1-standard-standard-5-400_851.dat'
 with open(datafilename) as f:
     data_list = f.readlines()
 
@@ -19,6 +19,9 @@ def get_useable_data(string_data):
     return list_useable_data
 
 run_data = [get_useable_data(data_list[i]) for i in range(1,len(data_list))]
+
+for n,i in enumerate(run_data):
+    print(n,len(i), len(i[0]), i[0][0])
 plots = [list(map(mean, zip(*run_data_item))) for run_data_item in run_data]
 #run_data1 = get_useable_data(data_list[1])
 #avgs1 = list(map(mean, zip(*run_data1)))
