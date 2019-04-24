@@ -18,6 +18,7 @@ class H_Agent:
         self.node_types = node_types
         self.initial_nodes = input_node_type
         self.training_index = 0
+        self.max_sample_size = 1000
         self.loss_mini_batch = 0
         self.memory = ExperienceReplay(unusual_sample_factor=.4, buffer_size=100)
         self.epsilon = 0.5
@@ -112,7 +113,9 @@ class H_Agent:
         actions_list = self.env.eligible_actions.copy()
         random.shuffle(actions_list)
         best_action = actions_list[0]
-        for i in range(len(actions_list)):
+        amount_to_sample = len(actions_list) if self.max_sample_size == 0 or greedy is True else min(
+            self.max_sample_size, len(actions_list))
+        for i in range(amount_to_sample):
             # search whole action space or to max sample search whichever is smaller
             action = actions_list[i]
             self.env + action
