@@ -2,6 +2,7 @@ from agents.network.DQN import DQN
 
 from environments.Environment import environment
 from environments.WorkflowEnvironment import workflow_env
+from environments.SingleEnv import single_env
 import torch
 import random
 
@@ -29,8 +30,8 @@ class S_Agent:
             self.env = workflow_env(number_inputs=self.initial_nodes, node_types=self.node_types,
                                 max_number_nodes=self.max_number_nodes)
             #print('w env')
-        if environment_name =='single_action':
-            self.env = workflow_env(number_inputs=self.initial_nodes, node_types=self.node_types,
+        if environment_name =='single':
+            self.env = single_env(number_inputs=self.initial_nodes, node_types=self.node_types,
                                     max_number_nodes=self.max_number_nodes)
             #print('single env')
         else:
