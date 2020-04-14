@@ -3,6 +3,7 @@ import networkx as nx
 import random
 import networkx.algorithms.isomorphism as iso
 import operator
+import matplotlib.pyplot as plt
 
 
 class environment:
@@ -134,9 +135,29 @@ class environment:
                 new_state[index][-1] = 1
         return new_state, new_features
 
+a = environment(node_types=3,max_number_nodes=5)
+g = environment.create_DAG(a.truth_state,a.truth_features)
+#nx.draw_shell(graph, with_labels=True, font_weight='bold')
 
+# create number for each group to allow use of colormap
+from itertools import count
+# get unique groups
+groups = set(nx.get_node_attributes(g,'feat').values())
+mapping = dict(zip(sorted(groups),count()))
+nodes = g.nodes()
+colors = [mapping[g.node[n]['feat']] for n in nodes]
+
+# drawing nodes and edges separately so we can capture collection for colobar
+pos = nx.spring_layout(g)
+ec = nx.draw_networkx_edges(g, pos, alpha=0.5)
+nc = nx.draw_networkx_nodes(g, pos, nodelist=nodes, node_color=colors,
+                            with_labels=True, font_weight='bold',node_size=100, cmap=plt.cm.jet)
+#plt.colorbar(nc)
+plt.axis('off')
+plt.show()
 '''a = workflow_env()
 print(a.truth_state)
 print(a.workflow_vals_truth)
 a+(0,1)
 print(operator.ifloordiv(7,2))'''
+plt.show()

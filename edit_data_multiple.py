@@ -1,5 +1,4 @@
 from matplotlib import pyplot as plt
-import numpy as np
 
 import re
 def mean(a):
@@ -40,13 +39,17 @@ new data style:
 'data/random/workflow/FINALdata_6-1-random-workflow-20-10000_3590.dat',
 'data/random/workflow/FINALdata_8-1-random-workflow-20-10000_7589.dat'
 '''
-filenames = []
-datafilename = 'data/standard/single/FINALdata_4-1-standard-single-20-10000_3280.dat'
-with open(datafilename) as f:
-    data_list = f.readlines()
-def running_mean(x, N):
-    cumsum = np.cumsum(np.insert(x, 0, 0))
-    return (cumsum[N:] - cumsum[:-N]) / float(N)
+filenames = ['data/hindsight/workflow/FINALdata_4-1-hindsight-workflow-20-10000_5463.dat',
+'data/hindsight/workflow/FINALdata_5-1-hindsight-workflow-20-10000_7379.dat',
+'data/hindsight/workflow/FINALdata_5-2-hindsight-workflow-20-10000_3261.dat',
+'data/standard/single/FINALdata_4-1-standard-single-20-10000_3280.dat'
+
+]
+datafilename = 'data/random/workflow/FINALdata_8-1-random-workflow-20-10000_7589.dat'
+file_data_list = []
+for file in filenames:
+    with open(file) as f:
+        file_data_list.append(f.readlines())
 
 #print(data_list[1])
 
@@ -57,19 +60,20 @@ def get_useable_data(string_data):
     return list_useable_data
 
 
-run_data = [get_useable_data(data_list[i]) for i in range(1,len(data_list))]
+run_data_list = [[get_useable_data(data_list[i]) for i in range(1,len(data_list))] for data_list in file_data_list]
 #print(len(run_data[-2]))
 
 #run_data_old = run_data[-2]
 
-for n,i in enumerate(run_data):
+for n,i in enumerate(run_data_list):
     #print(n,len(i),len(i[0]), i[0][0])
     print(n, len(i))
 
-plots = [list(map(mean, zip(*run_data_item))) for run_data_item in run_data]
+plots = [[list(map(mean, zip(*run_data_item))) for run_data_item in run_data] for run_data in run_data_list]
 #run_data1 = get_useable_data(data_list[1])
 #plots = [list(map(mean, zip(*run_data_old)))]
-print('avg',sum(plots[0]),len(plots[0]))
+for plot in plots:
+    print('avg',sum(plot[0]),len(plot[0]))
 
 
 #plots = [avgs1]
@@ -77,11 +81,10 @@ colors = ['r', 'g', 'b']
 labels = ['one node type', 'two node types', 'four node types']
 
 #print(avgs1[:5])
+x = list(range(len(plots[0])))
 
-y = [running_mean(plots[0],3000)]
-x = list(range(len(y[0])))
-for i in range(len(y)):
-    plt.plot(x, y[i], label=labels[i])
+for i in range(len(plots)):
+    plt.plot(x, plots[i], label=labels[i])
 plt.xlabel('episode')
 plt.ylabel('success rate')
 plt.title(r'success rate of greedy policy over time')

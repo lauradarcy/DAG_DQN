@@ -1,7 +1,8 @@
 
 from environments.Environment import environment
 import numpy as np
-env = environment(number_inputs=[0], node_types=1, max_number_nodes=7, loss=0)
+
+env = environment(number_inputs=[0], node_types=3, max_number_nodes=5, loss=0)
 env.reset()
 correct_combos = 0
 total_combos = 0
@@ -56,4 +57,6 @@ def num_final_states(size,types):
         states *= types*(2**i-1)
     print(states)
 
-num_final_states(7,1)
+num_final_states(10,1)
+num = 10180699028325
+print('{:.3e}'.format(num))
