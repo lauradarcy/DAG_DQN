@@ -18,7 +18,7 @@ class H_Agent:
         self.node_types = node_types
         self.initial_nodes = input_node_type
         self.training_index = 0
-        self.max_sample_size = 1000
+        self.max_sample_size = 0
         self.loss_mini_batch = 0
         self.memory = ExperienceReplay(unusual_sample_factor=.4, buffer_size=100)
         self.epsilon = 0.5
